@@ -33,11 +33,6 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     redirect_to "/items/#{@item.id}", alert: "#{@item.name} has been updated"
   end
-  def update
-    Item.update(item_params)
-    @item = Item.find(params[:id])
-    redirect_to "/items/#{@item.id}", alert: "#{@item.name} has been updated"
-  end
 
   private
 
