@@ -74,21 +74,15 @@ RSpec.describe "admin dashboard" do
 
     @merchant_1 = Merchant.create!(
       name: "Store Store",
-      created_at: Date.current,
-      updated_at: Date.current
     )
     @soccer = @merchant_1.items.create!(
       name: "Soccer Ball",
       description: "A ball of pure soccer.",
       unit_price: 32000,
-      created_at: Date.current,
-      updated_at: Date.current
     )
     @customer_1 = Customer.create!(
       first_name: "Malcolm",
       last_name: "Jordan",
-      created_at: Date.current,
-      updated_at: Date.current
     )
     @invoice_1 = @customer_1.invoices.create!(
       status: 1,
@@ -116,8 +110,6 @@ RSpec.describe "admin dashboard" do
       quantity: 1,
       unit_price: @soccer.unit_price,
       status: 0,
-      created_at: Date.current,
-      updated_at: Date.current
     )
      @invoice_item_2 = InvoiceItem.create!(
       item_id: @soccer.id,
@@ -125,8 +117,6 @@ RSpec.describe "admin dashboard" do
       quantity: 50,
       unit_price: @soccer.unit_price,
       status: 1,
-      created_at: Date.current,
-      updated_at: Date.current
     )
     @invoice_item_3 = InvoiceItem.create!(
       item_id: @soccer.id,
@@ -134,8 +124,6 @@ RSpec.describe "admin dashboard" do
       quantity: 1,
       unit_price: @soccer.unit_price,
       status: 1,
-      created_at: Date.current,
-      updated_at: Date.current
     )
      @invoice_item_4 = InvoiceItem.create!(
       item_id: @soccer.id,
@@ -143,8 +131,6 @@ RSpec.describe "admin dashboard" do
       quantity: 50,
       unit_price: @soccer.unit_price,
       status: 2,
-      created_at: Date.current,
-      updated_at: Date.current
     )
 
     visit "/admin"

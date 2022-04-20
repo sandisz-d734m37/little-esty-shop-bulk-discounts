@@ -1,7 +1,21 @@
 <% if @repo.present? %>
+  <h4>Project Repo Name:</h4>
   <% if @repo.is_a?(Repository) %>
-    <p><%= @repo.name %></p>
+    <p><strong><%= @repo.name %></strong></p>
   <% else %>
     <p><%= @repo[:message] %></p>
   <% end %>
+<% end %>
+
+<% if @contributors.present? %>
+  <h4>Project Contributors: </h4>
+  <ul>
+    <% @contributors.each do |c| %>
+      <% if c.is_a?(Contributor) %>
+        <li><strong>Username: </strong><%= c.login %> - <strong>Commits: </strong><%= c.contributions %></li>
+      <% else %>
+        <p><%= @c[:message] %></p>
+      <% end %>
+    <% end %>
+  </ul>
 <% end %>

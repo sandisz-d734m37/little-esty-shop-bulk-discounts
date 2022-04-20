@@ -1,8 +1,8 @@
 class Contributor
-  attr_reader :name, :contributions
+  attr_reader :login, :contributions
 
   def initialize(data)
-    @name = data[:name]
     @login = data[:login]
+    @contributions = data[:contributions]
   end
 end
