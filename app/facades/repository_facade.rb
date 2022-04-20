@@ -1,6 +1,7 @@
 class RepositoryFacade
   def self.repo_or_error_msg
     json = GithubService.get_repo_data
+    # binding.pry if json[:message]
     json[:message].nil? ? create_repo : json
     #ternary operator
   end

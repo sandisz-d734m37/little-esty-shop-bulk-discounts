@@ -1,7 +1,10 @@
 class ContributorFacade
   def self.contributor_or_error_msg
     json = GithubService.get_contributor_usernames
-    json.any? {|c| c[:message]} ? json : create_contributor
+    # binding.pry if json[:message]
+    json[:message].nil? ? create_repo : json
+    # binding.pry if json.find {|c| c[:message] != nil}
+    # json.any? {|c| c[:message]} ? json : create_contributor
     #ternary operator
   end
 
