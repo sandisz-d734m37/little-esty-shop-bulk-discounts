@@ -6,5 +6,13 @@ RSpec.describe GithubService do
       json = GithubService.get_repo_data
       expect(json).to have_key(:name)
     end
+
+    it "gets contributor usernames from contributors endpoint", :vcr do
+      json = GithubService.get_contributor_usernames
+      json.each do |contributor|
+        expect(contributor).to have_key(:login)
+        expect(contributor).to have_key(:contributions)
+      end
+    end
   end
 end
