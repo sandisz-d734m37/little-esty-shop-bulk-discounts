@@ -41,12 +41,20 @@ describe "merchant discount index page" do
 
   it 'lets you delete discounts with the click of a button' do
     expect(page).to have_content("Discount: buy 20 get 30% off")
-    
+
     within("#discount-#{@m1_discount2.id}") do
       click_button "Delete this discount"
     end
 
     expect(page).not_to have_content("Discount: buy 20 get 30% off")
+  end
+
+  it 'includes a button to edit a discount' do
+    within("#discount-#{@m1_discount1.id}") do
+      click_button "Edit this discount"
+    end
+
+    expect(current_path).to eq("/discounts/#{@m1_discount1.id}/edit")
   end
 
 end
