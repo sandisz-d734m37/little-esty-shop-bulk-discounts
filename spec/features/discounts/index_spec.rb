@@ -24,4 +24,14 @@ describe "merchant discount index page" do
 
     expect(page).not_to have_content("Discount: buy 2 get 50% off")
   end
+
+  it 'links to discount show page' do
+    within("#discount-#{@m1_discount1.id}") do
+      click_link("buy 10 get 20% off")
+
+      expect(current_path).to eq("/merchants/#{@merchant_1.id}/discounts/#{@m1_discount1.id}")
+    end
+  end
+
+
 end
