@@ -10,6 +10,11 @@
       Discount: <a href = "/discounts/<%= dis.id %>">
         buy <%= dis.quantity_threshold %> get <%= dis.percentage %>% off
       </a>
+      <form class="button_to" method="post" action="/merchants/<%= @merchant.id %>/discounts/<%= dis.id %>">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Delete this discount">
+      </form>
     </li>
   <% end %>
 </ol>

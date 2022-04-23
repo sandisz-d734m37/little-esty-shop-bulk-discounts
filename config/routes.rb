@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :new, :create, :update, :show]
     resources :invoices, only: [:index, :show]
     resources :invoice_items, only: [:update]
-    resources :discounts, only: [:index, :new, :create]
+    resources :discounts, only: [:index, :destroy, :new, :create]
   end
 
   get "/admin", to: "admin/dashboard#index"
