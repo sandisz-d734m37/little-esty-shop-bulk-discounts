@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "merchant discount index page" do
+describe "discount show page" do
   before do
     @merchant_1 = Merchant.create!(name: "Store Store")
 
