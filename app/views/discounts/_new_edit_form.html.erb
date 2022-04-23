@@ -1,0 +1,17 @@
+<%= form_with url: "/merchants/#{@merchant.id}/discounts", local: true do |f| %>
+  <%= f.label :quantity_threshold %>
+  <% if discount_present == true %>
+    <%= f.text_field :quantity_threshold, value: @discount.quantity_threshold %>
+  <% else %>
+    <%= f.text_field :quantity_threshold %>
+  <% end %>
+  <br/><br/>
+  <%= f.label :percentage %>
+  <% if discount_present == true %>
+    <%= f.text_field :percentage, value: @discount.percentage %>
+  <% else %>
+    <%= f.text_field :percentage %>
+  <% end %>
+  <br/><br/>
+  <%= f.submit %>
+<% end %>

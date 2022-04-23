@@ -30,6 +30,25 @@ class DiscountsController < ApplicationController
     redirect_to "/merchants/#{merchant.id}/discounts"
   end
 
+  def edit
+    @discount = BulkDiscount.find(params[:id])
+    @merchant = @discount.merchant
+  end
+
+  def update
+    merchant = Merchant.find(params[:merchant_id])
+    discount = BulkDiscount.find(params[:id])
+
+    discount.update(discount_params)
+
+    if discount.save
+      redirect_to "/merchants/#{merchant.id}/discounts"
+    else
+      flash.alert = "Error:\n• quantity threshold and percentage must not be blank\n• percentage must be between 0 and 100"
+      redirect_to "/discounts/#{discount.id}/edit"
+    end
+  end
+
   private
 
   def discount_params
