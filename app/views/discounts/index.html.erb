@@ -2,6 +2,10 @@
 
 <ol>
   <% @merchant.bulk_discounts.each do |dis| %>
-    <li id="discount-<%= dis.id %>"> Discount: buy <%= dis.quantity_threshold %> get <%= dis.percentage %>% off</li>
+    <li id="discount-<%= dis.id %>">
+      Discount: <a href = "/discounts/<%= dis.id %>">
+        buy <%= dis.quantity_threshold %> get <%= dis.percentage %>% off
+        </a>
+      </li>
   <% end %>
 </ol>

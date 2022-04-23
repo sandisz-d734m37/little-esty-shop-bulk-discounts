@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   patch "/items/:id", to: "items#update"
   get "/items/:id", to: "items#show"
 
+  resources :discounts, only: [:show]
+
+
   resources :merchants, only: [:show, :edit] do
     resources :items, only: [:index, :new, :create, :update, :show]
     resources :invoices, only: [:index, :show]
