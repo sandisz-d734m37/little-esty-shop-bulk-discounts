@@ -3,18 +3,21 @@
 <a href="discounts/new">
   New discount
 </a>
+<hr/>
+
 
 <ol>
   <% @merchant.bulk_discounts.each do |dis| %>
-    <li id="discount-<%= dis.id %>">
+    <li id="discount-<%= dis.id %>"><h3>
       Discount: <a href = "/discounts/<%= dis.id %>">
         buy <%= dis.quantity_threshold %> get <%= dis.percentage %>% off
       </a>
-      <form class="button_to" method="post" action="/merchants/<%= @merchant.id %>/discounts/<%= dis.id %>">
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <input type="hidden" name="_method" value="DELETE">
-        <input type="submit" value="Delete this discount">
-      </form>
+      </h3>
+
+      <%= button_to "Delete this discount", "/merchants/#{@merchant.id}/discounts/#{dis.id}", method: :delete %>
+      <br/>
+      <%= button_to "Edit this discount", "/discounts/#{dis.id}/edit", method: :get %>
     </li>
+    <hr/>
   <% end %>
 </ol>
