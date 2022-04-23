@@ -29,6 +29,15 @@ describe "Discount New Page" do
 
     expect(current_path).to eq("/merchants/#{@merchant.id}/discounts/new")
     expect(page).to have_content("Error: • quantity threshold and percentage must not be blank • percentage must be between 0 and 100")
+  end
 
+  it "displays error message if info is not input correctly" do
+    visit "/merchants/#{@merchant.id}/discounts/new"
+
+    fill_in('Quantity threshold', with: '10')
+    click_button("Create discount")
+
+    expect(current_path).to eq("/merchants/#{@merchant.id}/discounts/new")
+    expect(page).to have_content("Error: • quantity threshold and percentage must not be blank • percentage must be between 0 and 100")
   end
 end
