@@ -1,5 +1,7 @@
 <h1><%= @merchant.name %>
 </h1>
+<%= link_to "All my discounts", "/merchants/#{@merchant.id}/discounts" %>
+
 <br>
 <h3>
   <a href="/merchants/<%= @merchant.id %>/items">
