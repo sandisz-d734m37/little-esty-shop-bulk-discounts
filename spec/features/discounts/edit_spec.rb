@@ -7,20 +7,17 @@ describe "Discount Edit Page" do
   end
 
   it "has a form to edit the current merchant" do
-    visit "/merchants/#{@merchant.id}/discounts"
-    expect(page).to have_content("Discount: buy 10 get 20% off")
+    visit "/discounts/#{@m_discount.id}"
+    expect(page).to have_content("With purchase of 10, customer's recieve 20% off")
 
-    within "#discount-#{@m_discount.id}" do
-      click_button("Edit this discount")
-    end
+    click_button("Edit this discount")
 
-    fill_in('Quantity threshold', with: '10')
     fill_in('Percentage', with: '50')
     click_button("Save")
-    expect(current_path).to eq("/merchants/#{@merchant.id}/discounts")
+    expect(current_path).to eq("/discounts/#{@m_discount.id}")
 
-    expect(page).not_to have_content("Discount: buy 10 get 20% off")
-    expect(page).to have_content("Discount: buy 10 get 50% off")
+    expect(page).not_to have_content("With purchase of 10, customer's recieve 20% off")
+    expect(page).to have_content("With purchase of 10, customer's recieve 50% off")
   end
 
 

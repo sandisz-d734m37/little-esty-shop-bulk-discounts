@@ -1,6 +1,8 @@
 <h1>Discount #<%= @discount.id %></h1>
-<p>For merchant <%= @discount.merchant.id %></p>
+<p>For merchant <a href="/merchants/<%= @discount.merchant.id %>/discounts"><%= @discount.merchant.name %></a></p>
 
 <h3>
   With purchase of <%= @discount.quantity_threshold %>, customer's recieve <%= @discount.percentage %>% off
 </h3>
+
+<%= button_to "Edit this discount", "/discounts/#{@discount.id}/edit", method: :get %>

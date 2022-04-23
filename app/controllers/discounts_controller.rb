@@ -42,7 +42,7 @@ class DiscountsController < ApplicationController
     discount.update(discount_params)
 
     if discount.save
-      redirect_to "/merchants/#{merchant.id}/discounts"
+      redirect_to "/discounts/#{discount.id}"
     else
       flash.alert = "Error:\n• quantity threshold and percentage must not be blank\n• percentage must be between 0 and 100"
       redirect_to "/discounts/#{discount.id}/edit"
