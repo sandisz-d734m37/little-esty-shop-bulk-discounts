@@ -34,9 +34,9 @@ describe "merchant discount index page" do
   end
 
   it 'includes a button to create a new discount' do
-    click_button("New discount")
+    click_link("New discount")
 
-    expect(current_path).to eq("/discounts/#{@m1_discount1.id}/new")
+    expect(current_path).to eq("/merchants/#{@merchant_1.id}/discounts/new")
   end
 
 end
