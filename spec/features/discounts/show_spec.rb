@@ -10,4 +10,8 @@ describe "merchant discount index page" do
     visit "/discounts/#{@m1_discount2.id}"
   end
 
+  it 'displays pertinent information' do
+    expect(page).to have_content("With purchase of 30, customer's recieve 20% off")
+    expect(page).not_to have_content("With purchase of 20, customer's recieve 10% off")
+  end
 end
