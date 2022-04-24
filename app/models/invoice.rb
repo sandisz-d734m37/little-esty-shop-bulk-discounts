@@ -4,6 +4,7 @@ class Invoice < ApplicationRecord
   has_many :invoice_items
   has_many :items, through: :invoice_items
   has_many :merchants, through: :items
+  has_many :bulk_discounts, through: :merchants
   has_many :transactions
   belongs_to :customer
 
@@ -13,7 +14,7 @@ class Invoice < ApplicationRecord
     total = invoice_items
       .group(:invoice_id)
       .sum("invoice_items.unit_price * invoice_items.quantity")
-    total[id] / 100.0
+    @actual_total = total[id] / 100.0
   end
 
   def has_items_not_shipped
@@ -23,4 +24,15 @@ class Invoice < ApplicationRecord
   def self.oldest_first
     Invoice.order(:created_at)
   end
+
+  def discounted_total
+    disc_total = 0
+
+    invoice_items.each do |inv|
+      disc_total += inv.discount_that_price
+    end
+
+    (@actual_total - disc_total)
+  end
+
 end

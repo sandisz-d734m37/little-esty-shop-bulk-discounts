@@ -132,11 +132,14 @@ describe "invoice show page" do
   end
 
   it "displays total revenue and discounted revenue" do
-    # m1_disc1 = @merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 20)
+    m1_disc1 = @merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 20)
     m1_disc2 = @merchant_1.bulk_discounts.create!(quantity_threshold: 5, percentage: 50)
-    m2_disc1 = @merchant_2.bulk_discounts.create!(quantity_threshold: 7, percentage: 13)
+    m2_disc1 = @merchant_2.bulk_discounts.create!(quantity_threshold: 7, percentage: 90)
+    invoice_item_3 = InvoiceItem.create!(item_id: @beer.id, invoice_id: @invoice_1.id, quantity: 50, unit_price: @beer.unit_price, status: 1)
+
     visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
-    expect(page).to have_content("Total: $5320.0")
-    expect(page).to have_content("Discounted Total: $2820.0")
+
+    expect(page).to have_content("Total: $5370.0")
+    expect(page).to have_content("Discounted Total: $2825.0")
   end
 end

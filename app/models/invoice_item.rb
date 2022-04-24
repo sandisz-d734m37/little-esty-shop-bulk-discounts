@@ -12,4 +12,16 @@ class InvoiceItem < ApplicationRecord
   has_many :bulk_discounts, through: :merchant
 
   enum status: {"pending" => 0, "packaged" => 1, "shipped" => 2}
+
+  def discount_that_price
+    disc_to_use = bulk_discounts
+    .where("quantity_threshold <= ?", quantity)
+    .maximum(:percentage)
+
+    if disc_to_use.nil?
+      return 0
+    else
+      (quantity * unit_price) * (disc_to_use / 10000.0).to_f
+    end
+  end
 end
