@@ -216,7 +216,7 @@ describe "merchant dashboard page" do
       transaction_13 = invoice_13.transactions.create!(credit_card_number: 4023948573948293, result: "success")
 
       visit "/merchants/#{merch_1.id}/dashboard"
-
+      # save_and_open_page
       expect("Name: Debbie Twolegs").to appear_before("Name: Tommy Doubleleg")
       expect("Name: Tommy Doubleleg").to appear_before("Name: Brian Twinlegs")
       expect("Name: Brian Twinlegs").to appear_before("Name: Jared Goffleg")

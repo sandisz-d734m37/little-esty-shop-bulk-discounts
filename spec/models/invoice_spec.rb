@@ -140,5 +140,19 @@ RSpec.describe Invoice do
         expect(Invoice.oldest_first).to eq([@invoice_3, @invoice_1, @invoice_2])
       end
     end
+
+    describe 'bulk discounts' do
+      describe 'instance methods' do
+        it "claculates total discounted revenue" do
+          m1_disc1 = @merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 20)
+          m1_disc2 = @merchant_1.bulk_discounts.create!(quantity_threshold: 5, percentage: 50)
+          m2_disc1 = @merchant_2.bulk_discounts.create!(quantity_threshold: 7, percentage: 90)
+          m2_invoice_item = InvoiceItem.create!(item_id: @beer.id, invoice_id: @invoice_1.id, quantity: 30, unit_price: @beer.unit_price, status: 2)
+          
+          expect(@invoice_1.invoice_total).to eq(5350.0)
+          expect(@invoice_1.discounted_total).to eq(2823.0)
+        end
+      end
+    end
   end
 end
