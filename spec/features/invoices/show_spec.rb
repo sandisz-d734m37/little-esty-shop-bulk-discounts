@@ -147,17 +147,27 @@ describe "invoice show page" do
     end
 
     it "displays links to discount show pages" do
-      expect(page).not_to have_content("Buy 10 get 20% off")
       within("#ii-#{@invoice_item_2.id}") do
-        click_link "Buy 5 get 50% off"
+        click_link "Buy 5, get 50% off"
 
         expect(current_path).to eq("/discounts/#{@m1_disc2.id}")
       end
+
+      visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+
       within("#ii-#{@m2_invoice_item.id}") do
-        click_link "Buy 5 get 50% off"
+        click_link "Buy 7, get 90% off"
 
         expect(current_path).to eq("/discounts/#{@m2_disc1.id}")
       end
+
+      visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+
+      within("#ii-#{@invoice_item_1.id}") do
+        expect(page).to have_content("Discount applied: none")
+      end
+
+      expect(page).not_to have_content("Buy 10 get 20% off")
     end
   end
 

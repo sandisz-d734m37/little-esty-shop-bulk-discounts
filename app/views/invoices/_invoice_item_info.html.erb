@@ -27,6 +27,15 @@
       <%= f.submit "Update" %>
       <% end %>
     </p>
+    <p>Discount applied:
+      <% if !ii.disc_used.nil?%>
+        <a href="/discounts/<%= ii.disc_used.id %>">
+          Buy <%= ii.disc_used.quantity_threshold %>, get <%= ii.disc_used.percentage.to_i %>% off
+        </a>
+      <% else %>
+        none
+      <% end %>
+    </p>
   </div>
 <% end %>
 

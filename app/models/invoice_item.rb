@@ -24,4 +24,11 @@ class InvoiceItem < ApplicationRecord
       (quantity * unit_price) * (disc_to_use / 10000.0).to_f
     end
   end
+
+  def disc_used
+    c = bulk_discounts
+    .where("quantity_threshold <= ?", quantity)
+    .order(:percentage)
+    .last
+  end
 end
