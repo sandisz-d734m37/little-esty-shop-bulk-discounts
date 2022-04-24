@@ -131,15 +131,34 @@ describe "invoice show page" do
     end
   end
 
-  it "displays total revenue and discounted revenue" do
-    m1_disc1 = @merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 20)
-    m1_disc2 = @merchant_1.bulk_discounts.create!(quantity_threshold: 5, percentage: 50)
-    m2_disc1 = @merchant_2.bulk_discounts.create!(quantity_threshold: 7, percentage: 90)
-    invoice_item_3 = InvoiceItem.create!(item_id: @beer.id, invoice_id: @invoice_1.id, quantity: 50, unit_price: @beer.unit_price, status: 1)
+  describe "bulk_discounts" do
+    before do
+      @m1_disc1 = @merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 20)
+      @m1_disc2 = @merchant_1.bulk_discounts.create!(quantity_threshold: 5, percentage: 50)
+      @m2_disc1 = @merchant_2.bulk_discounts.create!(quantity_threshold: 7, percentage: 90)
+      @m2_invoice_item = InvoiceItem.create!(item_id: @beer.id, invoice_id: @invoice_1.id, quantity: 50, unit_price: @beer.unit_price, status: 1)
 
-    visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+      visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+    end
 
-    expect(page).to have_content("Total: $5370.0")
-    expect(page).to have_content("Discounted Total: $2825.0")
+    it "displays total revenue and discounted revenue" do
+      expect(page).to have_content("Total: $5370.0")
+      expect(page).to have_content("Discounted Total: $2825.0")
+    end
+
+    it "displays links to discount show pages" do
+      expect(page).not_to have_content("Buy 10 get 20% off")
+      within("#ii-#{@invoice_item_2.id}") do
+        click_link "Buy 5 get 50% off"
+
+        expect(current_path).to eq("/discounts/#{@m1_disc2.id}")
+      end
+      within("#ii-#{@m2_invoice_item.id}") do
+        click_link "Buy 5 get 50% off"
+
+        expect(current_path).to eq("/discounts/#{@m2_disc1.id}")
+      end
+    end
   end
+
 end
