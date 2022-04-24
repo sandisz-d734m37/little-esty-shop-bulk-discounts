@@ -4,6 +4,8 @@ RSpec.describe Item do
   describe "relationships" do
     it { should have_many(:invoices) }
     it { should belong_to(:merchant) }
+    it { should have_many(:bulk_discounts)}
+
   end
 
   describe "validations" do
@@ -49,7 +51,7 @@ RSpec.describe Item do
       expect(@beer.to_dollars).to eq(1.99)
     end
 
-    it "can find the best date for sales" do 
+    it "can find the best date for sales" do
     merch_1 = Merchant.create!(name: "Two-Legs Fashion")
 
     item_1 = merch_1.items.create!(name: "Two-Leg Pantaloons", description: "pants built for people with two legs", unit_price: 5000)
@@ -119,7 +121,7 @@ RSpec.describe Item do
     transaction_13 = invoice_13.transactions.create!(credit_card_number: 4023948573948293, result: "success")
     transaction_14 = invoice_14.transactions.create!(credit_card_number: 4023948573948293, result: "success")
     transaction_15 = invoice_15.transactions.create!(credit_card_number: 4023948573948293, result: "success")
- 
+
     expect(item_1.top_date_sales).to eq('2019-04-04')
     end
   end

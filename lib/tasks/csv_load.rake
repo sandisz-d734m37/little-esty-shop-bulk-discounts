@@ -114,6 +114,7 @@ namespace :csv_load do
   end
 
   task all: :environment do
+    BulkDiscount.destroy_all unless !InvoiceItem.first.present?
     InvoiceItem.destroy_all unless !InvoiceItem.first.present?
     Item.destroy_all unless !Item.first.present?
     Merchant.destroy_all unless !Merchant.first.present?

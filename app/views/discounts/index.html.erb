@@ -1,0 +1,21 @@
+<h1><a href="/merchants/<%= @merchant.id %>"><%= @merchant.name %></a>'s Discounts </h1>
+
+<a href="discounts/new">
+  New discount
+</a>
+<hr/>
+
+
+<ol>
+  <% @merchant.bulk_discounts.each do |dis| %>
+    <li id="discount-<%= dis.id %>"><h3>
+      Discount: <a href = "/discounts/<%= dis.id %>">
+        buy <%= dis.quantity_threshold %> get <%= dis.percentage.to_i %>% off
+      </a>
+      </h3>
+
+      <%= button_to "Delete this discount", "/merchants/#{@merchant.id}/discounts/#{dis.id}", method: :delete %>
+    </li>
+    <hr/>
+  <% end %>
+</ol>

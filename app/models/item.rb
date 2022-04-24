@@ -8,8 +8,8 @@ class Item < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
-
   belongs_to :merchant
+  has_many :bulk_discounts, through: :merchant
 
   enum status: { "disabled" => 0, "enabled" => 1}
 
@@ -22,6 +22,6 @@ class Item < ApplicationRecord
       .group("invoices.created_at")
       .order("total_rev")
       .first
-      .created_at  
+      .created_at
   end
 end

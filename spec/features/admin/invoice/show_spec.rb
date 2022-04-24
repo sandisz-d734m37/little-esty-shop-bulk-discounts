@@ -130,4 +130,44 @@ RSpec.describe "Invoice Show Page" do
       expect(page).to have_content("Status: packaged")
     end
   end
+
+  describe "bulk_discounts" do
+    before do
+      @m1_disc1 = @merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 20)
+      @m1_disc2 = @merchant_1.bulk_discounts.create!(quantity_threshold: 5, percentage: 50)
+      @m2_disc1 = @merchant_2.bulk_discounts.create!(quantity_threshold: 7, percentage: 90)
+      @m2_invoice_item = InvoiceItem.create!(item_id: @beer.id, invoice_id: @invoice_1.id, quantity: 50, unit_price: @beer.unit_price, status: 1)
+
+      visit "/admin/invoices/#{@invoice_1.id}"
+    end
+
+    it "displays total revenue and discounted revenue" do
+      expect(page).to have_content("Total: $5370.0")
+      expect(page).to have_content("Discounted Total: $2825.0")
+    end
+
+    it "displays links to discount show pages" do
+      within("#ii-#{@invoice_item_2.id}") do
+        click_link "Buy 5, get 50% off"
+
+        expect(current_path).to eq("/discounts/#{@m1_disc2.id}")
+      end
+
+      visit "/admin/invoices/#{@invoice_1.id}"
+
+      within("#ii-#{@m2_invoice_item.id}") do
+        click_link "Buy 7, get 90% off"
+
+        expect(current_path).to eq("/discounts/#{@m2_disc1.id}")
+      end
+
+      visit "/admin/invoices/#{@invoice_1.id}"
+
+      within("#ii-#{@invoice_item_1.id}") do
+        expect(page).to have_content("Discount applied: none")
+      end
+
+      expect(page).not_to have_content("Buy 10 get 20% off")
+    end
+  end
 end

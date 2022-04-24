@@ -27,9 +27,23 @@
       <%= f.submit "Update" %>
       <% end %>
     </p>
+    <p>Discount applied:
+      <% if !ii.disc_used.nil?%>
+        <a href="/discounts/<%= ii.disc_used.id %>">
+          Buy <%= ii.disc_used.quantity_threshold %>, get <%= ii.disc_used.percentage.to_i %>% off
+        </a>
+      <% else %>
+        none
+      <% end %>
+    </p>
   </div>
 <% end %>
 
 <div id="total_revenue">
   <h1> Total: $<%= @invoice.invoice_total %> </h1>
 </div>
+<% unless @invoice.bulk_discounts.empty? %>
+<div id="disc_revenue">
+  <h1> Discounted Total: $<%= @invoice.discounted_total.round(2) %> </h1>
+</div>
+<% end %>
