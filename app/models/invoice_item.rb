@@ -26,7 +26,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def disc_used
-    c = bulk_discounts
+    bulk_discounts
     .where("quantity_threshold <= ?", quantity)
     .order(:percentage)
     .last
