@@ -1,6 +1,10 @@
 class DiscountsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:merchant_id])
+    # @facade = DateFacade.new
+    # @facade.upcoming_holidays
+    # binding.pry
+
   end
 
   def show
