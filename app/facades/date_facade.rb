@@ -1,7 +1,7 @@
 class DateFacade
-  def upcoming_holidays
-    response = HTTParty.get('https://date.nager.at/api/v3/NextPublicHolidays/%2B1')
-    binding.pry
-    data = JSON.parse(response.body, symbolize_names: true)
+  def self.holiday
+    DateService.upcoming_holidays.map do |hol|
+      Holiday.new(hol)
+    end
   end
 end
