@@ -5,7 +5,7 @@ describe "Discount New Page" do
     @merchant = Merchant.create!(name: "Store Store")
   end
 
-  it "has a form to create a new merchant" do
+  it "has a form to create a new discount", :vcr do
     visit "/merchants/#{@merchant.id}/discounts"
     expect(page).to_not have_content("Discount: buy 10 get 50% off")
 

@@ -15,10 +15,16 @@ describe "merchant discount index page" do
 
     @m2_discount1 = @merchant_2.bulk_discounts.create!( percentage: 50, quantity_threshold: 2)
 
+    VCR.insert_cassette("displays_discounts_only_for_the_specified_merchant")
+
     visit "/merchants/#{@merchant_1.id}/discounts"
   end
 
-  it 'displays discounts only for the specified merchant' do
+  after do
+    VCR.eject_cassette
+  end
+
+  it 'displays discounts only for the specified merchant', :vcr do
     expect(page).to have_content("Discount: buy 10 get 20% off")
     expect(page).to have_content("Discount: buy 20 get 30% off")
 
@@ -39,14 +45,23 @@ describe "merchant discount index page" do
     expect(current_path).to eq("/merchants/#{@merchant_1.id}/discounts/new")
   end
 
-  it 'lets you delete discounts with the click of a button' do
-    expect(page).to have_content("Discount: buy 20 get 30% off")
-
-    within("#discount-#{@m1_discount2.id}") do
-      click_button "Delete this discount"
+  describe 'new castte' do
+    before do
+      VCR.eject_cassette
+    end
+    after do
+      VCR.insert_cassette("displays_discounts_only_for_the_specified_merchant")
     end
 
-    expect(page).not_to have_content("Discount: buy 20 get 30% off")
+    it 'lets you delete discounts with the click of a button', :vcr do
+      expect(page).to have_content("Discount: buy 20 get 30% off")
+
+      within("#discount-#{@m1_discount2.id}") do
+        click_button "Delete this discount"
+      end
+
+      expect(page).not_to have_content("Discount: buy 20 get 30% off")
+    end
   end
 
 end
