@@ -231,7 +231,7 @@ describe "merchant dashboard page" do
     end
   end
 
-  describe 'bulk discounts' do
+  describe 'bulk discounts', :vcr do
     it 'displays link to view all my bulk discounts' do
       expect(page).to have_link("All my discounts")
 
